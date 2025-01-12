@@ -8,12 +8,14 @@ public class PlayerAttack : MonoBehaviour
 
     private Animator anim;
     private MovementController playerMovement;
+    private CoinManager coinManager;
     private float cooldownTimer = Mathf.Infinity;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         playerMovement = GetComponent<MovementController>();
+        coinManager = GetComponent<CoinManager>();
     }
 
     private void Update()
@@ -29,8 +31,19 @@ public class PlayerAttack : MonoBehaviour
         anim.SetTrigger("attack");
         cooldownTimer = 0;
 
+        Projectile projectile = fireballs[FindFireball()].GetComponent<Projectile>();
+
+
         fireballs[FindFireball()].transform.position = firePoint.position;
-        fireballs[FindFireball()].GetComponent<Projectile>().SetDirection(Mathf.Sign(transform.localScale.x));
+        projectile.SetDirection(Mathf.Sign(transform.localScale.x));
+
+        if (coinManager != null)
+        {
+            float damageMultiplier = coinManager.GetDamageMultiplier();
+
+            projectile.SetDamage(projectile.BaseDamage * damageMultiplier);
+        }
+
     }
     private int FindFireball()
     {

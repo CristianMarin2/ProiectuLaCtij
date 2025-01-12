@@ -3,12 +3,18 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float baseDamage;
+
     private float direction;
     private bool hit;
     private float lifetime;
+    private float currentDamage;
+    
 
     private Animator anim;
     private BoxCollider2D boxCollider;
+
+    public float BaseDamage => baseDamage;
 
     private void Awake()
     {
@@ -29,6 +35,15 @@ public class Projectile : MonoBehaviour
         hit = true;
         boxCollider.enabled = false;
         anim.SetTrigger("explode");
+
+        if (collision.CompareTag("Enemy"))
+        {
+            Enemy enemy = collision.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(currentDamage);
+            }
+        }
     }
     public void SetDirection(float _direction)
     {
@@ -43,6 +58,11 @@ public class Projectile : MonoBehaviour
             localScaleX = -localScaleX;
 
         transform.localScale = new Vector3(localScaleX, transform.localScale.y, transform.localScale.z);
+    }
+
+    public void SetDamage(float damage)
+    {
+        currentDamage = damage; // Assign dynamic damage
     }
     private void Deactivate()
     {
