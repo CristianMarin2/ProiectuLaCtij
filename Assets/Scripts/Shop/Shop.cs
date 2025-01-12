@@ -2,11 +2,23 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] private CoinManager coinManager; // Reference to CoinManager
-    [SerializeField] private int damageUpgradeCost = 10; // Cost for damage multiplier upgrade
-    [SerializeField] private float damageMultiplierIncrease = 0.5f; // Amount to increase damage multiplier
-    [SerializeField] private int cooldownReductionCost = 15; // Cost for cooldown reduction
-    [SerializeField] private float cooldownReduction = 0.2f; // Amount to reduce cooldown
+    [SerializeField] private CoinManager coinManager; // Referința către CoinManager
+    [SerializeField] private int damageUpgradeCost = 10; // Cost pentru Damage Multiplier
+    [SerializeField] private float damageMultiplierIncrease = 1f; // Creștere Damage Multiplier
+    [SerializeField] private int cooldownReductionCost = 15; // Cost pentru Cooldown Reduction
+    [SerializeField] private float cooldownReduction = 0.05f; // Reducere Cooldown
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.N)) // Tasta "1" pentru Upgrade Damage
+        {
+            BuyDamageMultiplier();
+        }
+        else if (Input.GetKeyDown(KeyCode.M)) // Tasta "2" pentru Reduce Cooldown
+        {
+            BuyCooldownReduction();
+        }
+    }
 
     public void BuyDamageMultiplier()
     {

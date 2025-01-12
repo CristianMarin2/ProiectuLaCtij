@@ -18,13 +18,16 @@ public class PlayerAttack : MonoBehaviour
         coinManager = GetComponent<CoinManager>();
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButton(0) && cooldownTimer > attackCooldown && playerMovement.canAttack())
-            Attack();
+private void Update()
+{
+    // Adjust the cooldown with a minimum limit
+    float adjustedCooldown = Mathf.Max(attackCooldown - coinManager.AttackCooldownReduction, 0.1f);
 
-        cooldownTimer += Time.deltaTime;
-    }
+    if (Input.GetMouseButton(0) && cooldownTimer > adjustedCooldown && playerMovement.canAttack())
+        Attack();
+
+    cooldownTimer += Time.deltaTime;
+}
 
     private void Attack()
     {
