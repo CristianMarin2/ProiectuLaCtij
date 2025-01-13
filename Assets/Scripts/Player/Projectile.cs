@@ -25,11 +25,9 @@ public class Projectile : MonoBehaviour
     {
         if (hit) return;
 
-        // Move the projectile
         float movementSpeed = speed * Time.deltaTime * direction;
         transform.Translate(movementSpeed, 0, 0);
 
-        // Handle lifetime expiration
         lifetime += Time.deltaTime;
         if (lifetime > 5) gameObject.SetActive(false); // Deactivate projectile after 5 seconds
     }

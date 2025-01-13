@@ -14,7 +14,6 @@ public class MovementController : MonoBehaviour
 
     private void Awake()
     {
-        //Grab references for rigidbody and animator from object
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
@@ -24,7 +23,7 @@ public class MovementController : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal");
 
-        //Flip player when moving left-right
+        //Flip player 
         if (horizontalInput > 0.01f)
             transform.localScale = Vector3.one;
         else if (horizontalInput < -0.01f)
